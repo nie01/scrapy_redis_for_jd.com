@@ -102,7 +102,7 @@ class RFPDupeFilter(BaseDupeFilter):
         # added = self.server.sadd(self.key, fp)
         # added = self.server.sadd(self.key, fp)  # 原始部分
 
-        # TODO:指定查看指纹库
+        # TODO:查看指定redis.key的纹库
         # 修改部分》》》
         settings = get_project_settings()
         dupefilter_public_key = settings.get('DUPEFILTER_PUBLIC_KEY')  # 获取公共过过滤器redis.key

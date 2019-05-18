@@ -95,7 +95,8 @@ ROBOTSTXT_OBEY = False    # 设置是否遵守reboots协议 开关
 #  以下是自定义
 
 # 日志设置
-LOG_LEVEL = 'INFO'
+# LOG_LEVEL = 'INFO'
+LOG_LEVEL = 'WARNING'
 # LOG_FILE = 'spider.log'
 # LOG_ENABLE = False  # 显示日志 开关
 

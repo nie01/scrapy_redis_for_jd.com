@@ -22,18 +22,28 @@ def add_start_url(redis_key, urls):
 
 # TODO：开始运行爬虫
 if __name__ == '__main__':
-    # urls = ['http://www.abc.com','https://www.xinli001.com/info/100388065']
-    # urls = ['http://www.abc.com']
-    # add_start_url(redis_key='category_list:start_urls', urls=urls)
-    # # exit()
-    # process = CrawlerProcess(get_project_settings())
-    # process.crawl('category_list')  # 分类列表爬虫
-    # # process.crawl('jd_detail')  # 详情页爬虫
-    # process.start()
+    '''
+    # *** 注意有个坑，调试的时候发现
+    # urls = 'http://www.abc.com/'能通过代理软件fiddler,而 urls = 'http://www.abc.com' 不能通过
+    猜测：
+    scrapy下载器没有加工处理的访问路径就直接提交给了“fiddle”， 
+    而“fiddle”也没有加工处理访问的路径信息直接提交给服务器。
+    '''
 
+    # urls = ['http://www.abc.com/','https://www.xinli001.com/info/100388065']
+    urls = ['http://www.abc.com/']
+    add_start_url(redis_key='category_list:start_urls', urls=urls)
+    # exit()
     process = CrawlerProcess(get_project_settings())
-    # process.crawl('category_list')  # 分类列表爬虫
+    # 可同时运行以下爬虫
+    process.crawl('category_list')  # 分类列表爬虫
     process.crawl('jd_detail')  # 详情页爬虫
-    process.start()
+
+    process.start()  # 开始运行！
+
+    # process = CrawlerProcess(get_project_settings())
+    # # process.crawl('category_list')  # 分类列表爬虫
+    # process.crawl('jd_detail')  # 详情页爬虫
+    # process.start()
 
 

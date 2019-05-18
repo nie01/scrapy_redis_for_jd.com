@@ -8,12 +8,15 @@ from scrapy_redis.spiders import RedisSpider
 class MySpider_for_detail(RedisSpider):
     name = 'jd_detail'  # 蜘蛛名称
 
+    requests_key = 'jd:detail_requests'  # 队列的redis.key
+
     # 接收的状态码
     handle_httpstatus_list = [403,404,500]
 
     # 数据库参数设置
     custom_settings = {
-        'REDIS_HOST': '',
+        'REQUESTS_KEY': 'detail_requests',
+        'REDIS_HOST': '127.0.0.1',
         'REDIS_PORT': 6379,
         'REDIS_PARAMS': {
             'password': 'abc+ABC+123+root',

@@ -34,7 +34,17 @@ class Base(object):
 
         self.server = server
         self.spider = spider
-        self.key = key % {'spider': spider.name}
+        # self.key = key % {'spider': spider.name}
+
+        # TODO: 修改爬取url队列的redis.key
+        # 修改部分》》》
+        if hasattr(spider, 'requests_key'):
+            # 存在自定义 requests_key
+            self.key = spider.requests_key
+        else:
+            self.key = key % {'spider': spider.name}  # 原始部分
+        # 修改部分《《《///////
+
         self.serializer = serializer
 
     def _encode_request(self, request):
@@ -106,7 +116,7 @@ class PriorityQueue(Base):
 
         # self.server.execute_command('ZADD', self.key, score, data)  #  原始部分
 
-        # TODO：动态修改目标爬虫队列（redis数据库的key）
+        # TODO：push 动态修改目标爬虫队列（redis数据库的key）
         # 修改部分》》》
         requests_key = self.key
         if 'requests_key' in request.meta.keys():

@@ -42,7 +42,8 @@ class MySpider(RedisSpider):
         # print('正文内容', response.text)
 
         url = 'https://www.xinli001.com/info/100388065'
-        meta = {'requests_key': 'jd_detail:requests'}
+        # url = 'http://www.abc.com/?n=1'
+        meta = {'requests_key': 'jd:detail_requests'}
         yield Request(url=url, callback=self.parse_detail, meta=meta)
 
     def parse_detail(self, response):

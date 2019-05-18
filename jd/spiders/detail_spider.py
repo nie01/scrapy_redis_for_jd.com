@@ -5,8 +5,8 @@ from scrapy import Request
 from scrapy_redis.spiders import RedisSpider
 
 
-class MySpider(RedisSpider):
-    name = 'category_list'  # 蜘蛛名称
+class MySpider_for_detail(RedisSpider):
+    name = 'jd_detail'  # 蜘蛛名称
 
     # 接收的状态码
     handle_httpstatus_list = [403,404,500]
@@ -41,12 +41,12 @@ class MySpider(RedisSpider):
         print('标题：', t)
         # print('正文内容', response.text)
 
-        url = 'https://www.xinli001.com/info/100388065'
-        meta = {'requests_key': 'jd_detail:requests'}
-        yield Request(url=url, callback=self.parse_detail, meta=meta)
+        # url = 'https://www.xinli001.com/info/100388065'
+        # meta = {'requests_key': 'jd_detail:requests'}
+        # yield Request(url=url, callback=self.parse_detail, meta=meta)
 
     def parse_detail(self, response):
         url = response.url
         print('parse_detail解析函数url=', url)
-        # 这里只是为了传递回调函数实例化，然后队列已交由 detail 爬虫处理
-        pass
+        t = response.xpath('//title/text()').extract()[0]
+        print('标题：', t)

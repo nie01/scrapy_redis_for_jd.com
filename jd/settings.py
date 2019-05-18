@@ -134,7 +134,7 @@ IMAGES_STORE = 'file/img'
 # }
 
 # 过滤器的redis_key 的优先级： Request参数meta['queue_key'] > settings中的QUEUQ_PUBLIC_KEY > 默认的key
-# DUPEFILTER_PUBLIC_KEY = 'public:dupefilter'  # 获取公共过滤器的redis_key
+DUPEFILTER_PUBLIC_KEY = 'jd:public_dupefilter'  # 获取公共过滤器的redis_key
 
 # scrapy-redis 配置 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # 1.(*必须加*)。使用scrapy_redis.duperfilter.REPDupeFilter的去重组件，在redis数据库里做去重。

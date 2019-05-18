@@ -95,13 +95,26 @@ class PriorityQueue(Base):
         return self.server.zcard(self.key)
 
     def push(self, request):
-        """Push a request"""
+        """Push a request
+        把request序列化后存入指定队列入库
+        """
         data = self._encode_request(request)
         score = -request.priority
         # We don't use zadd method as the order of arguments change depending on
         # whether the class is Redis or StrictRedis, and the option of using
         # kwargs only accepts strings, not bytes.
-        self.server.execute_command('ZADD', self.key, score, data)
+
+        # self.server.execute_command('ZADD', self.key, score, data)  #  原始部分
+
+        # TODO：动态修改目标爬虫队列（redis数据库的key）
+        # 修改部分》》》
+        requests_key = self.key
+        if 'requests_key' in request.meta.keys():
+            requests_key = request.meta['requests_key']
+
+        self.server.execute_command('ZADD', requests_key, score, data)
+
+        # 修改部分《《《///////
 
     def pop(self, timeout=0):
         """

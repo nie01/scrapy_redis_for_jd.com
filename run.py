@@ -20,13 +20,20 @@ def add_start_url(redis_key, urls):
             red.lpush(redis_key,url)
 
 
-
+# TODO：开始运行爬虫
 if __name__ == '__main__':
-    urls = ['http://www.abc.com','https://www.xinli001.com/info/100388065']
-    add_start_url(redis_key='category_list:start_urls', urls=urls)
-    # exit()
+    # urls = ['http://www.abc.com','https://www.xinli001.com/info/100388065']
+    # urls = ['http://www.abc.com']
+    # add_start_url(redis_key='category_list:start_urls', urls=urls)
+    # # exit()
+    # process = CrawlerProcess(get_project_settings())
+    # process.crawl('category_list')  # 分类列表爬虫
+    # # process.crawl('jd_detail')  # 详情页爬虫
+    # process.start()
+
     process = CrawlerProcess(get_project_settings())
-    process.crawl('category_list')
+    # process.crawl('category_list')  # 分类列表爬虫
+    process.crawl('jd_detail')  # 详情页爬虫
     process.start()
 
 

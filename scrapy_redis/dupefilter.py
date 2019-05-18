@@ -7,6 +7,8 @@ from scrapy.utils.request import request_fingerprint
 from . import defaults
 from .connection import get_redis_from_settings
 
+from scrapy.utils.project import get_project_settings
+
 
 logger = logging.getLogger(__name__)
 
@@ -97,7 +99,21 @@ class RFPDupeFilter(BaseDupeFilter):
         """
         fp = self.request_fingerprint(request)
         # This returns the number of values added, zero if already exists.
-        added = self.server.sadd(self.key, fp)
+        # added = self.server.sadd(self.key, fp)
+        # added = self.server.sadd(self.key, fp)  # 原始部分
+
+        # TODO:指定查看指纹库
+        # 修改部分》》》
+        settings = get_project_settings()
+        dupefilter_public_key = settings.get('DUPEFILTER_PUBLIC_KEY')  # 获取公共过过滤器redis.key
+        dupefilter_key = dupefilter_public_key or self.key  # 如果定义了公共过滤器的redis.key，则优先使用
+
+        if 'dupefilter_key' in request.meta.keys():
+            dupefilter_key = request.meta['dupefilter_key']  # 目标爬虫过滤器的redis.key
+
+        added = self.server.sadd(dupefilter_key, fp)  # 原始部分
+        # 修改部分《《《///////
+
         return added == 0
 
     def request_fingerprint(self, request):

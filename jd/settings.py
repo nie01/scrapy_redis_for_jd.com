@@ -19,7 +19,7 @@ NEWSPIDER_MODULE = 'jd.spiders'
 #USER_AGENT = 'jd (+http://www.yourdomain.com)'
 
 # Obey robots.txt rules
-ROBOTSTXT_OBEY = True
+ROBOTSTXT_OBEY = False    # 设置是否遵守reboots协议 开关
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
@@ -88,3 +88,76 @@ ROBOTSTXT_OBEY = True
 #HTTPCACHE_DIR = 'httpcache'
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
+
+
+
+
+#  以下是自定义
+
+# 日志设置
+LOG_LEVEL = 'INFO'
+# LOG_FILE = 'spider.log'
+# LOG_ENABLE = False  # 显示日志 开关
+
+# 下载速度控制
+CONCURRENT_REQUESTS = 32  # 线程数量 / 也是每次从redis读取url的数量
+DOWNLOAD_DELAY = 0.2  # 下载器在同一个网站下一个页面前需要等待的时间
+
+COOKIES_ENABLED = False  # cookies开关
+
+# 设置http请求头信息 固定的，需要随机改变的话 在中间件里添加  'caiji.middlewares.UserAgentMiddleware': 300,  # 300是必须 随机更换 User-Agent
+#  模拟 谷歌的请求头
+DEFAULT_REQUEST_HEADERS = {
+   'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36',
+   'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+   'Accept-Encoding': 'gzip, deflate',
+   'Accept-Language': 'zh-CN,zh;q=0.9',
+   'Cache-Control': 'max-age=0',
+   'Connection': 'keep-alive',
+   'DNT': '1',
+   # 'Upgrade-Insecure-Requests': '1',
+}
+
+# 保存图片的目录路径
+IMAGES_STORE = 'file/img'
+
+
+
+# scrapy-redis 配置 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+#  自定义改造部分 配置
+
+# redis 数据库参数
+# REDIS_HOST = '127.0.0.1'  # redis地址
+# REDIS_HOST = 6379  #
+# REDIS_PARAMS = {'password': 'abc+ABC+123+root',
+#                 'db': 0  # 哪个？数据库
+# }
+
+# 过滤器的redis_key 的优先级： Request参数meta['queue_key'] > settings中的QUEUQ_PUBLIC_KEY > 默认的key
+# DUPEFILTER_PUBLIC_KEY = 'public:dupefilter'  # 获取公共过滤器的redis_key
+
+# scrapy-redis 配置 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+# 1.(*必须加*)。使用scrapy_redis.duperfilter.REPDupeFilter的去重组件，在redis数据库里做去重。
+DUPEFILTER_CLASS = "scrapy_redis.dupefilter.RFPDupeFilter"
+# 2.（*必须加*）。使用了scrapy_redis的调度器，在redis里面分配请求。
+SCHEDULER = "scrapy_redis.scheduler.Scheduler"
+# 3.（*必须加*）。在redis queues 允许暂停和暂停后恢复，也就是不清理redis queues
+SCHEDULER_PERSIST = True
+
+# 4.管道（*必须加*）。通过RedisPipeline将item写入key为 spider.name: items的redis的list中，供后面的分布式处理item。
+# 这个已经由scrapy-redis实现了，不需要我们自己手动写代码，直接使用即可。
+ITEM_PIPELINES = {
+   'scrapy_redis.pipelines.RedisPipeline': 100,  # scrapy-redis的（*必须加*）
+    # 格式为：'项目名.文件名.类名'：优先级（越小越大）
+   # 'jd.pipelines.jd_category_list_pipelines':300,
+   # 'jd.pipelines.jd_detail':300,
+   # 'jd.pipelines.imagesDownloadPipeline':300 # 下载图片
+}
+
+
+
+
+
+
+
+

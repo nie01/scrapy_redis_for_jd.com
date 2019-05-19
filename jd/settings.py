@@ -54,7 +54,8 @@ ROBOTSTXT_OBEY = False    # 设置是否遵守reboots协议 开关
 # See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
 DOWNLOADER_MIDDLEWARES = {
    # 'jd.middlewares.JdDownloaderMiddleware': 543,
-     'jd.middlewares.ProxyMiddleware': 543,  # 代理IP下载中间件
+   'jd.middlewares.UserAgentMiddleware':300, # 300是必须， (动态)修改User-Agent 下载中间件
+   'jd.middlewares.ProxyMiddleware': 543,  # (动态)修改代理IP下载中间件
 }
 
 # Enable or disable extensions

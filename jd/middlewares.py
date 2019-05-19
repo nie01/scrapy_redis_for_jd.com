@@ -101,3 +101,12 @@ class JdDownloaderMiddleware(object):
 
     def spider_opened(self, spider):
         spider.logger.info('Spider opened: %s' % spider.name)
+
+class ProxyMiddleware(object):
+    '''
+    代理IP 中间件
+    '''
+    def process_request(self,request, spider):
+        print('代理IP 下载中间件process_request')
+        # 如果有 IP池 可以控制动态更换 代理ip
+        request.meta['proxy'] = 'http://127.0.0.1:8888'

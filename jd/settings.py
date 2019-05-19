@@ -52,9 +52,10 @@ ROBOTSTXT_OBEY = False    # 设置是否遵守reboots协议 开关
 
 # Enable or disable downloader middlewares
 # See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
-#DOWNLOADER_MIDDLEWARES = {
-#    'jd.middlewares.JdDownloaderMiddleware': 543,
-#}
+DOWNLOADER_MIDDLEWARES = {
+   # 'jd.middlewares.JdDownloaderMiddleware': 543,
+     'jd.middlewares.ProxyMiddleware': 543,  # 代理IP下载中间件
+}
 
 # Enable or disable extensions
 # See https://doc.scrapy.org/en/latest/topics/extensions.html
@@ -101,7 +102,7 @@ LOG_LEVEL = 'WARNING'
 # LOG_ENABLE = False  # 显示日志 开关
 
 # 下载速度控制
-CONCURRENT_REQUESTS = 32  # 线程数量 / 也是每次从redis读取url的数量
+CONCURRENT_REQUESTS = 2  # 线程数量 / 也是每次从redis读取url的数量
 DOWNLOAD_DELAY = 0.2  # 下载器在同一个网站下一个页面前需要等待的时间
 
 COOKIES_ENABLED = False  # cookies开关

@@ -4,6 +4,8 @@
 from scrapy import Request
 from scrapy_redis.spiders import RedisSpider
 
+from jd.items import ImagesDownloadItem
+
 
 class MySpider(RedisSpider):
     name = 'category_list'  # 蜘蛛名称
@@ -41,10 +43,16 @@ class MySpider(RedisSpider):
         print('标题：', t)
         # print('正文内容', response.text)
 
-        url = 'https://www.xinli001.com/info/100388065'
-        # url = 'http://www.abc.com/?n=1'
-        meta = {'requests_key': 'jd:detail_requests'}
-        yield Request(url=url, callback=self.parse_detail, meta=meta)
+        imgItem = ImagesDownloadItem()
+        imgItem['referer'] = url
+        imgItem['name'] = '百度logo'
+        imgItem['src'] = 'https://www.baidu.com/img/baidu_jgylogo3.gif'
+        yield imgItem
+
+        # url = 'https://www.xinli001.com/info/100388065'
+        # # url = 'http://www.abc.com/?n=1'
+        # meta = {'requests_key': 'jd:detail_requests'}
+        # yield Request(url=url, callback=self.parse_detail, meta=meta)
 
     def parse_detail(self, response):
         url = response.url

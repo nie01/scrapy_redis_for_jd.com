@@ -30,8 +30,8 @@ if __name__ == '__main__':
     而“fiddle”也没有加工处理访问的路径信息直接提交给服务器。
     '''
 
-    urls = ['http://www.abc.com/','https://www.xinli001.com/info/100388065']
-    # urls = ['http://www.abc.com/']
+    # urls = ['http://www.abc.com/','https://www.xinli001.com/info/100388065']
+    urls = ['http://www.abc.com/']
     add_start_url(redis_key='category_list:start_urls', urls=urls)
     # exit()
     process = CrawlerProcess(get_project_settings())

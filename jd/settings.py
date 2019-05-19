@@ -54,7 +54,7 @@ ROBOTSTXT_OBEY = False    # 设置是否遵守reboots协议 开关
 # See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
 DOWNLOADER_MIDDLEWARES = {
    # 'jd.middlewares.JdDownloaderMiddleware': 543,
-   'jd.middlewares.UserAgentMiddleware':300, # 300是必须， (动态)修改User-Agent 下载中间件
+   # 'jd.middlewares.UserAgentMiddleware':300, # 300是必须， (动态)修改User-Agent 下载中间件
    'jd.middlewares.ProxyMiddleware': 543,  # (动态)修改代理IP下载中间件
 }
 
@@ -151,10 +151,10 @@ SCHEDULER_PERSIST = True
 # 这个已经由scrapy-redis实现了，不需要我们自己手动写代码，直接使用即可。
 ITEM_PIPELINES = {
    'scrapy_redis.pipelines.RedisPipeline': 100,  # scrapy-redis的（*必须加*）
+    'jd.pipelines.ImagesDownloadPipeline': 300  # 下载图片管道
     # 格式为：'项目名.文件名.类名'：优先级（越小越大）
    # 'jd.pipelines.jd_category_list_pipelines':300,
    # 'jd.pipelines.jd_detail':300,
-   # 'jd.pipelines.imagesDownloadPipeline':300 # 下载图片
 }
 
 

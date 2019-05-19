@@ -12,3 +12,11 @@ class JdItem(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
     pass
+
+class ImagesDownloadItem(scrapy.Item):
+    '''
+    下载图片元素
+    '''
+    name = scrapy.Field()
+    src = scrapy.Field()  # 图片url地址
+    referer = scrapy.Field()  # 来源

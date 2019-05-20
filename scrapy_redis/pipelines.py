@@ -58,15 +58,18 @@ class RedisPipeline(object):
         return cls.from_settings(crawler.settings)
 
     def process_item(self, item, spider):
+        print('=============================')
         return deferToThread(self._process_item, item, spider)
 
     def _process_item(self, item, spider):
+        print('+++++++++++++++++++++++++++++')
         key = self.item_key(item, spider)
         data = self.serialize(item)
         self.server.rpush(key, data)
         return item
 
     def item_key(self, item, spider):
+        print('item_key------')
         """Returns redis key based on given spider.
 
         Override this function to use a different key depending on the item

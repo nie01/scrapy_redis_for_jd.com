@@ -29,6 +29,12 @@ class ImagesDownloadPipeline(ImagesPipeline):
         # print(info)
         yield scrapy.Request(url=o['src'],meta={'name':o['name'],'referer':o['referer']})
 
+        # # 测试
+        # for i in range(1000):
+        #     url = 'http:www.abc.com/?t=%d.jpg'%i
+        #     print('yield=>',url)
+        #     yield scrapy.Request(url=url,meta={'name': 'name-%d'%i,'referer': o['referer']})
+
     def file_path(self,request,response=None,info=None):
         '''
         自定义 图片文件名称
@@ -50,7 +56,8 @@ class ImagesDownloadPipeline(ImagesPipeline):
 
         file_name = 'urlmd5_%s.%s'%(urlmd5, name2)
         # print(request.meta)
-        # print(file_name)
+        print(file_name)
+        # a = 1/0
         return file_name
 
 

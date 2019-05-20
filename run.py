@@ -20,6 +20,16 @@ def add_start_url(redis_key, urls):
             red.lpush(redis_key,url)
 
 
+def add_categroy_start_url():
+    urls = ['http://www.scrapy.com']
+    urls = []
+    for i in range(1,2):
+        url = 'https://list.jd.com/list.html?cat=670,671,672&page=%d&sort=sort_totalsales15_desc&trans=1&JL=6_0_0#J_main'%i
+        urls.append(url)
+
+    add_start_url(redis_key='category_list:start_urls', urls=urls)
+
+
 # TODO：开始运行爬虫
 if __name__ == '__main__':
     '''
@@ -31,9 +41,11 @@ if __name__ == '__main__':
     '''
 
     # urls = ['http://www.abc.com/','https://www.xinli001.com/info/100388065']
-    urls = ['http://www.abc.com/']
-    add_start_url(redis_key='category_list:start_urls', urls=urls)
+    # urls = ['http://www.abc.com/']
+    # add_start_url(redis_key='category_list:start_urls', urls=urls)
     # exit()
+
+    add_categroy_start_url()
     process = CrawlerProcess(get_project_settings())
     # 可同时运行以下爬虫
     process.crawl('category_list')  # 分类列表爬虫

@@ -55,7 +55,7 @@ ROBOTSTXT_OBEY = False    # 设置是否遵守reboots协议 开关
 DOWNLOADER_MIDDLEWARES = {
    # 'jd.middlewares.JdDownloaderMiddleware': 543,
    # 'jd.middlewares.UserAgentMiddleware':300, # 300是必须， (动态)修改User-Agent 下载中间件
-   'jd.middlewares.ProxyMiddleware': 543,  # (动态)修改代理IP下载中间件
+   # 'jd.middlewares.ProxyMiddleware': 543,  # (动态)修改代理IP下载中间件
 }
 
 # Enable or disable extensions
@@ -98,7 +98,7 @@ DOWNLOADER_MIDDLEWARES = {
 
 # 日志设置
 # LOG_LEVEL = 'INFO'
-LOG_LEVEL = 'WARNING'
+# LOG_LEVEL = 'WARNING'
 # LOG_FILE = 'spider.log'
 # LOG_ENABLE = False  # 显示日志 开关
 
@@ -122,7 +122,7 @@ DEFAULT_REQUEST_HEADERS = {
 }
 
 # 保存图片的目录路径
-IMAGES_STORE = 'file/img'
+IMAGES_STORE = 'imgs'
 
 
 
@@ -148,7 +148,6 @@ SCHEDULER = "scrapy_redis.scheduler.Scheduler"
 SCHEDULER_PERSIST = True
 
 # 4.管道（*必须加*）。通过RedisPipeline将item写入key为 spider.name: items的redis的list中，供后面的分布式处理item。
-# 这个已经由scrapy-redis实现了，不需要我们自己手动写代码，直接使用即可。
 ITEM_PIPELINES = {
    'scrapy_redis.pipelines.RedisPipeline': 100,  # scrapy-redis的（*必须加*）
     'jd.pipelines.ImagesDownloadPipeline': 300  # 下载图片管道

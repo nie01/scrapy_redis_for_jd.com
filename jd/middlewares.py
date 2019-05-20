@@ -110,6 +110,15 @@ class ProxyMiddleware(object):
         print('代理IP 下载中间件process_request')
         # 如果有 IP池 可以控制动态更换 代理ip
         request.meta['proxy'] = 'http://127.0.0.1:8888'
+        # #对拦截到请求的url进行判断（协议头到底是http还是https）
+        # #request.url返回值：http://www.xxx.com
+        # h = request.url.split(':')[0]  #请求的协议头
+        # if h == 'https':
+        #     ip = random.choice(PROXY_https)
+        #     request.meta['proxy'] = 'https://'+ip
+        # else:
+        #     ip = random.choice(PROXY_http)
+        #     request.meta['proxy'] = 'http://' + ip
 
 class UserAgentMiddleware(object):
     '''

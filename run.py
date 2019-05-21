@@ -49,7 +49,8 @@ if __name__ == '__main__':
     add_categroy_start_url()
     process = CrawlerProcess(get_project_settings())
     # 可同时运行以下爬虫
-    process.crawl('category_list')  # 分类列表爬虫
+    # process.crawl('category_list')  # 分类列表爬虫
+    process.crawl('image_download')  # 分类列表爬虫
     # process.crawl('jd_detail')  # 详情页爬虫
 
     process.start()  # 开始运行！

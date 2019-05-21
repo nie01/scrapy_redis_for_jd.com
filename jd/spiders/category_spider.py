@@ -70,8 +70,15 @@ class MySpider(RedisSpider):
 
             t = item.xpath('.//div[@class="p-name"]//em//text()').extract()
             goods['name'] = t[0].strip() if len(t) else None
-
             # print(goods)
+
+            meta = {}
+            meta = {'requests_key': 'jd:img_requests'}
+            meta['referer'] = response.url
+            meta['name'] = goods['name']
+            # meta['src'] = goods['img1']
+            yield Request(url=goods['img1'], callback=self.parse_img, headers={'Referer': meta['referer']}, meta=meta)
+
             # imgItem = ImagesDownloadItem()
             # imgItem['referer'] = response.url
             # imgItem['name'] = goods['name']

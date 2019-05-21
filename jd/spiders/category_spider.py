@@ -9,7 +9,8 @@ from jd.items import ImagesDownloadItem
 
 class MySpider(RedisSpider):
     name = 'category_list'  # 蜘蛛名称
-
+    # idle_timeout = 30  # 空闲超时，定义此数值值将会让setting里的参数失效。idle_timeout必须>5 否则空闲不受限制
+    redis_key = 'jd:category_list_start_urls'
     # requests_key = 'jd:detail_requests'  # 队列的redis.key
 
     # 接收的状态码
@@ -70,12 +71,12 @@ class MySpider(RedisSpider):
             t = item.xpath('.//div[@class="p-name"]//em//text()').extract()
             goods['name'] = t[0].strip() if len(t) else None
 
-            print(goods)
-            imgItem = ImagesDownloadItem()
-            imgItem['referer'] = response.url
-            imgItem['name'] = goods['name']
-            imgItem['src'] = goods['img1']
-            yield imgItem
+            # print(goods)
+            # imgItem = ImagesDownloadItem()
+            # imgItem['referer'] = response.url
+            # imgItem['name'] = goods['name']
+            # imgItem['src'] = goods['img1']
+            # yield imgItem
 
         # imgItem = ImagesDownloadItem()
         # imgItem['referer'] = url

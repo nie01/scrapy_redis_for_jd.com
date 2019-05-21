@@ -118,8 +118,11 @@ class RedisMixin(object):
     def spider_idle(self):
         """Schedules a request if available, otherwise waits."""
         # XXX: Handle a sentinel to close the spider.
-        self.schedule_next_requests()
-        raise DontCloseSpider
+        # print('spider_idle')
+
+        self.schedule_next_requests()    # 这里调用schedule_next_requests() 来从redis中生成新的请求
+        raise DontCloseSpider  # 抛出不要关闭爬虫的DontCloseSpider异常，保证爬虫活着
+
 
 
 class RedisSpider(RedisMixin, Spider):

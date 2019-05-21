@@ -27,7 +27,8 @@ def add_categroy_start_url():
         url = 'https://list.jd.com/list.html?cat=670,671,672&page=%d&sort=sort_totalsales15_desc&trans=1&JL=6_0_0#J_main'%i
         urls.append(url)
 
-    add_start_url(redis_key='category_list:start_urls', urls=urls)
+    # add_start_url(redis_key='category_list:start_urls', urls=urls)
+    add_start_url(redis_key='jd:category_list_start_urls', urls=urls)
 
 
 # TODO：开始运行爬虫

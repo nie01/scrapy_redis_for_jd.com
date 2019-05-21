@@ -93,39 +93,6 @@ DOWNLOADER_MIDDLEWARES = {
 
 
 
-
-#  以下是自定义
-
-# 日志设置
-# LOG_LEVEL = 'INFO'
-# LOG_LEVEL = 'WARNING'
-# LOG_FILE = 'spider.log'
-# LOG_ENABLE = False  # 显示日志 开关
-
-# 下载速度控制
-CONCURRENT_REQUESTS = 2  # 线程数量 / 也是每次从redis读取url的数量
-DOWNLOAD_DELAY = 0.2  # 下载器在同一个网站下一个页面前需要等待的时间
-
-COOKIES_ENABLED = False  # cookies开关
-
-# 设置http请求头信息 固定的，需要随机改变的话 在中间件里添加  'caiji.middlewares.UserAgentMiddleware': 300,  # 300是必须 随机更换 User-Agent
-#  模拟 谷歌的请求头
-DEFAULT_REQUEST_HEADERS = {
-   'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36',
-   'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
-   'Accept-Encoding': 'gzip, deflate',
-   'Accept-Language': 'zh-CN,zh;q=0.9',
-   'Cache-Control': 'max-age=0',
-   'Connection': 'keep-alive',
-   'DNT': '1',
-   # 'Upgrade-Insecure-Requests': '1',
-}
-
-# 保存图片的目录路径
-IMAGES_STORE = 'imgs'
-
-
-
 # scrapy-redis 配置 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 #  自定义改造部分 配置
 
@@ -159,6 +126,51 @@ ITEM_PIPELINES = {
 
 
 
+
+
+#  以下是自定义  -——————————————————————————————————————————————————————————
+
+# 日志设置
+# LOG_LEVEL = 'INFO'
+# LOG_LEVEL = 'WARNING'
+# LOG_FILE = 'spider.log'
+# LOG_ENABLE = False  # 显示日志 开关
+
+# 下载速度控制
+CONCURRENT_REQUESTS = 2  # 线程数量 / 也是每次从redis读取url的数量
+DOWNLOAD_DELAY = 1  # 下载器在同一个网站下一个页面前需要等待的时间
+
+COOKIES_ENABLED = False  # cookies开关
+
+# 设置http请求头信息 固定的，需要随机改变的话 在中间件里添加  'caiji.middlewares.UserAgentMiddleware': 300,  # 300是必须 随机更换 User-Agent
+#  模拟 谷歌的请求头
+DEFAULT_REQUEST_HEADERS = {
+   'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36',
+   'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+   'Accept-Encoding': 'gzip, deflate',
+   'Accept-Language': 'zh-CN,zh;q=0.9',
+   'Cache-Control': 'max-age=0',
+   'Connection': 'keep-alive',
+   'DNT': '1',
+   # 'Upgrade-Insecure-Requests': '1',
+}
+
+# 保存图片的目录路径
+IMAGES_STORE = 'imgs'
+
+
+
+
+# 扩展——————————————
+
+# IDLE_EXT_ENABLED = True  # 控制开关@空闲超时扩展
+# 空闲超时扩展 / 控制scrapy空跑问题  IDLE_TIMEOUT 必须>5 否则空闲不受限制
+IDLE_TIMEOUT = 15  # 空闲超时/允许的空闲时长(单位：秒，整数)IDLE_TIMEOUT必须大于5否则无效 ，超时后scrapy将关闭
+
+# 扩展Enable or disable extensions
+EXTENSIONS = {
+   'jd.extensions.SpiderIdleTimeoutExensions': 500,  # 空闲超时扩展 / 控制scrapy空跑问题
+}
 
 
 

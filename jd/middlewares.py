@@ -90,6 +90,7 @@ class JdDownloaderMiddleware(object):
         return response
 
     def process_exception(self, request, exception, spider):
+        # print(exception)
         # Called when a download handler or a process_request()
         # (from other downloader middleware) raises an exception.
 
@@ -119,6 +120,25 @@ class ProxyMiddleware(object):
         # else:
         #     ip = random.choice(PROXY_http)
         #     request.meta['proxy'] = 'http://' + ip
+
+    def process_response(self, request, response, spider):
+        print('Porxy.process_response(*)=>', response)
+        pass
+        return response
+
+    def process_exception(self,request,exception,spider):
+        '''
+        异常处理,
+        这里主要用于判断是否需要更换IP
+        :param request:
+        :param exception:
+        :param spider:
+        :return:
+        '''
+        # ConnectionRefusedError('由于目标计算机积极拒绝，无法连接。',)
+        exception_str = repr(exception)
+        print('地理ip捕捉到异常：', exception_str)
+
 
 class UserAgentMiddleware(object):
     '''
@@ -169,4 +189,4 @@ class UserAgentMiddleware(object):
         # 随机修改User-Agent
         ua = random.choice(self.user_agent_list)
         request.headers.setdefault('User-Agent', ua)
-        print('随机修改User-Agent=>', request.headers['User-Agent'])
+        # print('随机修改User-Agent=>', request.headers['User-Agent'])

@@ -53,9 +53,9 @@ ROBOTSTXT_OBEY = False    # 设置是否遵守reboots协议 开关
 # Enable or disable downloader middlewares
 # See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
 DOWNLOADER_MIDDLEWARES = {
-   # 'jd.middlewares.JdDownloaderMiddleware': 543,
+   'jd.middlewares.JdDownloaderMiddleware': 543,
    # 'jd.middlewares.UserAgentMiddleware':300, # 300是必须， (动态)修改User-Agent 下载中间件
-   # 'jd.middlewares.ProxyMiddleware': 543,  # (动态)修改代理IP下载中间件
+   'jd.middlewares.ProxyMiddleware': 543,  # (动态)修改代理IP下载中间件
 }
 
 # Enable or disable extensions
@@ -104,7 +104,7 @@ DOWNLOADER_MIDDLEWARES = {
 # }
 
 # 过滤器的redis_key 的优先级： Request参数meta['queue_key'] > settings中的QUEUQ_PUBLIC_KEY > 默认的key
-DUPEFILTER_PUBLIC_KEY = 'jd:public_dupefilter'  # 获取公共过滤器的redis_key
+DUPEFILTER_PUBLIC_KEY = 'jd:public_dupefilter'  # 公共过滤器的redis_key
 
 # scrapy-redis 配置 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # 1.(*必须加*)。使用scrapy_redis.duperfilter.REPDupeFilter的去重组件，在redis数据库里做去重。
@@ -132,7 +132,7 @@ ITEM_PIPELINES = {
 
 # 日志设置
 # LOG_LEVEL = 'INFO'
-# LOG_LEVEL = 'WARNING'
+LOG_LEVEL = 'WARNING'
 # LOG_FILE = 'spider.log'
 # LOG_ENABLE = False  # 显示日志 开关
 

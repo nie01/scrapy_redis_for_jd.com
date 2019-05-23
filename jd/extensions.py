@@ -13,14 +13,11 @@ class SpiderIdleTimeoutExensions(object):
    '''
    TODO: 空闲超时扩展 / 控制scrapy空跑问题
    '''
-   def __init__(self, idle_number, crawler):
+   def __init__(self, idle_timeout, crawler):
       self.crawler = crawler
-      self.idle_number = idle_number
 
-      self.idle_timeout = crawler.settings.getint('IDLE_TIMEOUT')  # 空闲超时
-      if 'idle_timeout' in crawler.spidercls.__dict__.keys():
-         # 爬虫里的数据成员变量 idle_timeout有优先权
-         self.idle_timeout = crawler.spidercls.idle_timeout  # 爬虫里的数据
+      # self.idle_timeout = crawler.settings.getint('IDLE_TIMEOUT')  # 空闲超时
+      self.idle_timeout = idle_timeout  # 空闲超时
 
       self.idle_time_start = time.time()  # 空闲起始时间戳
       self.idle_timeA = time.time()  # 上一次调用spider_idle(*)触发时间点
@@ -49,13 +46,9 @@ class SpiderIdleTimeoutExensions(object):
       # if not 'redis_key' in crawler.spidercls.__dict__.keys():
       #     raise NotConfigured('Only supports RedisSpider')
 
-      # get the number of items from settings
-      # idle_number = crawler.settings.getint('IDLE_NUMBER', 360)
-
       # instantiate the extension object
-      # 实例化扩展对象
-      # ext = cls(crawler)
-      ext = cls(100, crawler)
+      # TODO：实例化扩展对象 把参数传给 def __init__(self, idle_timeout, crawler)
+      ext = cls(idle_timeout, crawler)  # 把参数传给 def __init__(self, idle_timeout, crawler)
 
       # connect the extension object to signals
       # 将扩展对象连接到信号，如何： 将signals.spider_idle 与 spider_idle() 方法关联起来。
@@ -66,16 +59,16 @@ class SpiderIdleTimeoutExensions(object):
       return ext
 
    def spider_opened(self, spider):
-      spider.logger.info("opened spider {}, Allow waiting time:{} second".format(spider.name, self.idle_number*5))
+      # spider.logger.info("开始")
+      pass
 
    def spider_closed(self, spider):
-      spider.logger.info("closed spider {}, Waiting time exceeded {} second".format(spider.name, self.idle_number*5))
+      # spider.logger.info("closed spider")
+      pass
 
    def spider_idle(self, spider):
       # 程序启动的时候会调用这个方法一次，之后如果队列处于空闲状态时，每隔5秒就会再调用一次
-
       # print('now=>',self.__class__.__name__,inspect.stack()[0][3])
-
       idle_time = 0  # 总空闲时间
       self.idle_timeB = time.time()  # 本次调用时间戳
       AB = round(self.idle_timeB - self.idle_timeA)  # 时间间隔

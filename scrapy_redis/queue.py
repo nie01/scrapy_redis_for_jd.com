@@ -122,6 +122,10 @@ class PriorityQueue(Base):
         if 'requests_key' in request.meta.keys():
             requests_key = request.meta['requests_key']
 
+        # key2 = request.meta.get('requests_key', None)
+        # if key2:
+        #     requests_key = key2
+
         self.server.execute_command('ZADD', requests_key, score, data)
 
         # 修改部分《《《///////

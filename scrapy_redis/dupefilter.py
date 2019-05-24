@@ -111,6 +111,10 @@ class RFPDupeFilter(BaseDupeFilter):
         if 'dupefilter_key' in request.meta.keys():
             dupefilter_key = request.meta['dupefilter_key']  # 目标爬虫过滤器的redis.key
 
+        # key2 = request.meta.get('dupefilter_key', None)
+        # if key2:
+        #     dupefilter_key = key2
+
         added = self.server.sadd(dupefilter_key, fp)  # 原始部分
         # 修改部分《《《///////
 

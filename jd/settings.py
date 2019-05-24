@@ -55,7 +55,9 @@ ROBOTSTXT_OBEY = False    # 设置是否遵守reboots协议 开关
 DOWNLOADER_MIDDLEWARES = {
    'jd.middlewares.JdDownloaderMiddleware': 543,
    # 'jd.middlewares.UserAgentMiddleware':300, # 300是必须， (动态)修改User-Agent 下载中间件
-   'jd.middlewares.ProxyMiddleware': 543,  # (动态)修改代理IP下载中间件
+   # 'jd.middlewares.ProxyMiddleware': 543,  # (动态)修改代理IP下载中间件
+   'jd.middlewares.StatusCodeMiddleware': 601,  # 捕捉状态码，“优先级”必须 >= 600 载中间件才能捕获 301,302...状态码
+   # 'jd.middlewares.TestMiddleware': 601,  # 测试下载中间件
 }
 
 # Enable or disable extensions
@@ -124,8 +126,13 @@ ITEM_PIPELINES = {
 }
 
 
+# 重试配置
+# RETRY_ENABLED = True                  # 默认开启失败重试，一般关闭
+# RETRY_TIMES = 3                         # 失败后重试次数，默认两次
+# RETRY_HTTP_CODES = [500, 502, 503, 504, 522, 524, 408]    # 碰到这些验证码，才开启重试
 
-
+# spider接收的异常状态码，与spider中的成员变量 handle_httpstatus_list 相同功能相似 但 # 301,302,不属于异常范畴
+# HTTPERROR_ALLOWED_CODES = [403,404,500]
 
 
 #  以下是自定义  -——————————————————————————————————————————————————————————
@@ -134,11 +141,11 @@ ITEM_PIPELINES = {
 # LOG_LEVEL = 'INFO'
 LOG_LEVEL = 'WARNING'
 # LOG_FILE = 'spider.log'
-# LOG_ENABLE = False  # 显示日志 开关
+LOG_ENABLE = False  # 显示日志 开关
 
 # 下载速度控制
 CONCURRENT_REQUESTS = 1  # 线程数量 / 也是每次从redis读取url的数量
-DOWNLOAD_DELAY = 2  # 下载器在同一个网站下一个页面前需要等待的时间
+DOWNLOAD_DELAY = 0.2  # 下载器在同一个网站下一个页面前需要等待的时间
 
 COOKIES_ENABLED = False  # cookies开关
 

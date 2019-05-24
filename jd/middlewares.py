@@ -5,8 +5,9 @@
 # See documentation in:
 # https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 
-from scrapy import signals
 import random
+from scrapy import signals
+from scrapy.exceptions import NotConfigured
 
 class JdSpiderMiddleware(object):
     # Not all methods need to be defined. If a method is not defined,
@@ -81,6 +82,7 @@ class JdDownloaderMiddleware(object):
         return None
 
     def process_response(self, request, response, spider):
+        # print('Porxy.process_response(*)=>', response.status)
         # Called with the response returned from the downloader.
 
         # Must either;
@@ -103,11 +105,39 @@ class JdDownloaderMiddleware(object):
     def spider_opened(self, spider):
         spider.logger.info('Spider opened: %s' % spider.name)
 
-class ProxyMiddleware(object):
+
+class StatusCodeMiddleware(object):
     '''
-    代理IP 中间件
+    测试中间件
     '''
     def process_request(self,request, spider):
+        # print('测试process_request',request.url)
+        pass
+
+    def process_response(self, request, response, spider):
+        print('StatusCodeMiddleware中间件捕捉到的状态码：', response.status)
+        # print(request.url,'测试process_response',response.status,response.url)
+        pass
+        return response
+
+class TestMiddleware(object):
+    '''
+    测试中间件
+    '''
+    def process_request(self,request, spider):
+        # print('测试process_request',request.url)
+        pass
+
+    def process_response(self, request, response, spider):
+        print(request.url,'测试process_response',response.status,response.url)
+        pass
+        return response
+
+class ProxyMiddleware(object):
+    '''
+    IP代理中间件
+    '''
+    def process_request(self, request, spider):
         print('代理IP 下载中间件process_request')
         # 如果有 IP池 可以控制动态更换 代理ip
         request.meta['proxy'] = 'http://127.0.0.1:8888'
@@ -120,6 +150,7 @@ class ProxyMiddleware(object):
         # else:
         #     ip = random.choice(PROXY_http)
         #     request.meta['proxy'] = 'http://' + ip
+        return None
 
     def process_response(self, request, response, spider):
         print('Porxy.process_response(*)=>', response)
@@ -138,6 +169,9 @@ class ProxyMiddleware(object):
         # ConnectionRefusedError('由于目标计算机积极拒绝，无法连接。',)
         exception_str = repr(exception)
         print('地理ip捕捉到异常：', exception_str)
+        # if exception_str.find('由于目标计算机积极拒绝，无法连接。'):
+        #     print('重试')
+        #     return request  # 重新发送请求
 
 
 class UserAgentMiddleware(object):

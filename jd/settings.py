@@ -118,10 +118,10 @@ SCHEDULER_PERSIST = True
 
 # 4.管道（*必须加*）。通过RedisPipeline将item写入key为 spider.name: items的redis的list中，供后面的分布式处理item。
 ITEM_PIPELINES = {
-   'scrapy_redis.pipelines.RedisPipeline': 100,  # scrapy-redis的（*必须加*）
-    'jd.pipelines.ImagesDownloadPipeline': 300  # 下载图片管道
+   # 'scrapy_redis.pipelines.RedisPipeline': 100,  # 如果启用则会把 item数据保存到redis
+    # 'jd.pipelines.ImagesDownloadPipeline': 300,  # 下载图片管道
     # 格式为：'项目名.文件名.类名'：优先级（越小越大）
-   # 'jd.pipelines.jd_category_list_pipelines':300,
+   'jd.pipelines.CategoryListPipelines': 300,
    # 'jd.pipelines.jd_detail':300,
 }
 
@@ -141,11 +141,11 @@ ITEM_PIPELINES = {
 # LOG_LEVEL = 'INFO'
 LOG_LEVEL = 'WARNING'
 # LOG_FILE = 'spider.log'
-LOG_ENABLE = False  # 显示日志 开关
+# LOG_ENABLE = False  # 显示日志 开关
 
 # 下载速度控制
-CONCURRENT_REQUESTS = 1  # 线程数量 / 也是每次从redis读取url的数量
-DOWNLOAD_DELAY = 0.2  # 下载器在同一个网站下一个页面前需要等待的时间
+CONCURRENT_REQUESTS = 2  # 线程数量 / 也是每次从redis读取url的数量
+# DOWNLOAD_DELAY = 0.2  # 下载器在同一个网站下一个页面前需要等待的时间
 
 COOKIES_ENABLED = False  # cookies开关
 

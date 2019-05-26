@@ -7,17 +7,55 @@
 
 import hashlib
 import copy
-
+import time
 import scrapy
+import pymysql
+import logging
+
+from scrapy.exceptions import DropItem
 from scrapy.pipelines.images import ImagesPipeline
+from jd.items import CategoryListItem
 
 from jd.items import ImagesDownloadItem
 
 
-class JdPipeline(object):
-    def process_item(self, item, spider):
-        return item
+# class JdPipeline(object):
+#     def process_item(self, item, spider):
+#         return item
 
+
+class CategoryListPipelines(object):
+    def __init__(self):
+        print('初始化管道')
+        # 链接数据库
+        self.connect = pymysql.connect(host='localhost',
+                                  user='root',
+                                  passwd='abc+ABC+123+root',
+                                  db='spider',
+                                  charset='utf8',  # 注意这里charset属性为 ‘utf8’，中间没有-
+                                  )
+        # 获取操作指针
+        self.cursor = self.connect.cursor()
+
+    def process_item(self, item, spider):
+        if not isinstance(item, CategoryListItem):
+            return item  # 不是对应的 item
+
+        try:
+            # 插入数据库
+            self.cursor.execute('''insert into `jd_goods`(`goods_id`,`name`,`img1`)
+              value(%s,%s,%s)
+            ''', (item['goods_id'], item['name'], item['img1']))
+            self.connect.commit()  # 提交SQL语句
+
+        except Exception as error:
+            print('异常：',error)
+            # spider.logger.error(error)
+        except:
+            print('----------------------------------------//')
+
+        print('已保存！',item['goods_id'])
+        return item
 
 class ImagesDownloadPipeline(ImagesPipeline):
     '''

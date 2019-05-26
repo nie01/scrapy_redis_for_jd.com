@@ -29,7 +29,6 @@ class SpiderIdleTimeoutExensions(object):
       # first check if the extension should be enabled and raise
       # NotConfigured otherwise
 
-
       if 'idle_timeout' in crawler.spidercls.__dict__.keys():
          # 爬虫里的数据成员变量 idle_timeout有优先权
          idle_timeout = crawler.spidercls.idle_timeout  # 爬虫里的数据

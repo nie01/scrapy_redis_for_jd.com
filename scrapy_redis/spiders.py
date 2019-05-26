@@ -81,12 +81,14 @@ class RedisMixin(object):
         # TODO: Use redis pipeline execution.
         while found < self.redis_batch_size:
             data = fetch_one(self.redis_key)
+            # print('+++++++++++++', data)
+            # data = None
             if not data:
                 # Queue empty.
                 break
-            req = self.make_request_from_data(data)
+            req = self.make_request_from_data(data)  # 返回一个Request对象
             if req:
-                yield req
+                yield req  # ***********
                 found += 1
             else:
                 self.logger.debug("Request not made from data: %r", data)

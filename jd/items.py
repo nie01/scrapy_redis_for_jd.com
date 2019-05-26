@@ -10,8 +10,14 @@ import scrapy
 
 class JdItem(scrapy.Item):
     # define the fields for your item here like:
-    # name = scrapy.Field()
+    name = scrapy.Field()
     pass
+
+class CategoryListItem(scrapy.Item):
+    goods_id = scrapy.Field()
+    name = scrapy.Field()
+    img1 = scrapy.Field()
+
 
 class ImagesDownloadItem(scrapy.Item):
     '''

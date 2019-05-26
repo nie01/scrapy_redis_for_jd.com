@@ -113,9 +113,10 @@ class StatusCodeMiddleware(object):
     def process_request(self,request, spider):
         # print('测试process_request',request.url)
         pass
+        # return None
 
     def process_response(self, request, response, spider):
-        print('StatusCodeMiddleware中间件捕捉到的状态码：', response.status)
+        # print('StatusCodeMiddleware中间件捕捉到的状态码：', response.status)
         # print(request.url,'测试process_response',response.status,response.url)
         pass
         return response

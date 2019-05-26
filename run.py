@@ -25,6 +25,7 @@ def add_categroy_start_url():
     urls = []
     for i in range(1,2):
         url = 'https://list.jd.com/list.html?cat=670,671,672&page=%d&sort=sort_totalsales15_desc&trans=1&JL=6_0_0#J_main'%i
+        # url = 'http://www.abc.com/code.php?code=200'
         urls.append(url)
 
     # add_start_url(redis_key='category_list:start_urls', urls=urls)

@@ -13,11 +13,13 @@ class JdItem(scrapy.Item):
     name = scrapy.Field()
     pass
 
-class CategoryListItem(scrapy.Item):
+class GoodsItem(scrapy.Item):
     goods_id = scrapy.Field()
     name = scrapy.Field()
     img1 = scrapy.Field()
 
+class GoodsListItem(scrapy.Item):
+    list = scrapy.Field()
 
 class ImagesDownloadItem(scrapy.Item):
     '''

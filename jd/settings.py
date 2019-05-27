@@ -121,7 +121,8 @@ ITEM_PIPELINES = {
    # 'scrapy_redis.pipelines.RedisPipeline': 100,  # 如果启用则会把 item数据保存到redis
     # 'jd.pipelines.ImagesDownloadPipeline': 300,  # 下载图片管道
     # 格式为：'项目名.文件名.类名'：优先级（越小越大）
-   'jd.pipelines.CategoryListPipelines': 300,
+   # 'jd.pipelines.GoodsPipelines': 300,  # 提交单个商品入库
+   'jd.pipelines.GoodsListPipelines': 300,  # 批量提交商品入库
    # 'jd.pipelines.jd_detail':300,
 }
 

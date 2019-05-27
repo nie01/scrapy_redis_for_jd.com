@@ -4,7 +4,8 @@
 from scrapy import Request
 from scrapy_redis.spiders import RedisSpider
 # from jd.items import ImagesDownloadItem
-from jd.items import CategoryListItem
+from jd.items import GoodsListItem
+from jd.items import GoodsItem
 
 class MySpider(RedisSpider):
     name = 'category_list'  # 蜘蛛名称
@@ -52,7 +53,7 @@ class MySpider(RedisSpider):
         print('>>>>>>解析：',response.url)
         self.counting += 1
         for i in range(10):
-            goods_item = CategoryListItem()
+            goods_item = GoodsItem()
             goods_item['goods_id'] = 'id-%d_%d' % (self.counting, i)
             goods_item['name'] = 'name-%d_%d' % (self.counting, i)
             goods_item['img1'] = 'src-%d_%d' % (self.counting, i)
@@ -80,7 +81,6 @@ class MySpider(RedisSpider):
         count = 0
         goods_list = []
         front_img_list = []
-
         for item in list:
             count += 1
             goods = {}
@@ -113,7 +113,9 @@ class MySpider(RedisSpider):
                 continue
 
             # print(goods)
+            goods_list.append(goods)
 
+            # 下载封面图片
             # meta = {}
             # meta = {'requests_key': 'jd:img_requests'}
             # meta['referer'] = response.url
@@ -121,18 +123,25 @@ class MySpider(RedisSpider):
             # meta['src'] = goods['img1']
             # yield Request(url=goods['img1'], callback=self.parse_img, headers={'Referer': meta['referer']}, meta=meta)
 
-            goods_item = CategoryListItem()
-            goods_item['goods_id'] = goods['goods_id']
-            goods_item['name'] = goods['name']
-            goods_item['img1'] = goods['img1']
-            yield goods_item
+            # 提交单个商品入库
+            # goods_item = CategoryListItem()
+            # goods_item['goods_id'] = goods['goods_id']
+            # goods_item['name'] = goods['name']
+            # goods_item['img1'] = goods['img1']
+            # yield goods_item
             # break
 
+            # 使用图片管道下载封面图
             # imgItem = ImagesDownloadItem()
             # imgItem['referer'] = response.url
             # imgItem['name'] = goods['name']
             # imgItem['src'] = goods['img1']
             # yield imgItem
+
+        # // for --------------------------------------
+        list_item = GoodsListItem()
+        list_item['list'] = goods_list
+        yield list_item
 
         # imgItem = ImagesDownloadItem()
         # imgItem['referer'] = url

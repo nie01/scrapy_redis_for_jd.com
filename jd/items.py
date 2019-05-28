@@ -18,7 +18,28 @@ class GoodsItem(scrapy.Item):
     name = scrapy.Field()
     img1 = scrapy.Field()
 
-class GoodsListItem(scrapy.Item):
+class GoodsList_id_name_img1_Item(scrapy.Item):
+    '''
+    商品基本列表 id,name,img1
+    '''
+    list = scrapy.Field()
+
+class GoodsList_priceItem(scrapy.Item):
+    '''
+    价格列表
+    '''
+    list = scrapy.Field()
+
+class GoodsList_comment_countItem(scrapy.Item):
+    '''
+    评论数量列表
+    '''
+    list = scrapy.Field()
+
+class GoodsList_shop_idItem(scrapy.Item):
+    '''
+    商品店铺归属列表
+    '''
     list = scrapy.Field()
 
 class ImagesDownloadItem(scrapy.Item):

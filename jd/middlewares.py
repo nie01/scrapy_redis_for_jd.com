@@ -139,7 +139,7 @@ class ProxyMiddleware(object):
     IP代理中间件
     '''
     def process_request(self, request, spider):
-        print('代理IP 下载中间件process_request')
+        # print('代理IP 下载中间件process_request')
         # 如果有 IP池 可以控制动态更换 代理ip
         request.meta['proxy'] = 'http://127.0.0.1:8888'
         # #对拦截到请求的url进行判断（协议头到底是http还是https）
@@ -154,8 +154,7 @@ class ProxyMiddleware(object):
         return None
 
     def process_response(self, request, response, spider):
-        print('Porxy.process_response(*)=>', response)
-        pass
+        # print('Porxy.process_response(*)=>', response)
         return response
 
     def process_exception(self,request,exception,spider):

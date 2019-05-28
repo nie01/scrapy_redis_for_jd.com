@@ -55,7 +55,7 @@ ROBOTSTXT_OBEY = False    # 设置是否遵守reboots协议 开关
 DOWNLOADER_MIDDLEWARES = {
    'jd.middlewares.JdDownloaderMiddleware': 543,
    # 'jd.middlewares.UserAgentMiddleware':300, # 300是必须， (动态)修改User-Agent 下载中间件
-   # 'jd.middlewares.ProxyMiddleware': 543,  # (动态)修改代理IP下载中间件
+   'jd.middlewares.ProxyMiddleware': 543,  # (动态)修改代理IP下载中间件
    'jd.middlewares.StatusCodeMiddleware': 601,  # 捕捉状态码，“优先级”必须 >= 600 载中间件才能捕获 301,302...状态码
    # 'jd.middlewares.TestMiddleware': 601,  # 测试下载中间件
 }
@@ -122,7 +122,10 @@ ITEM_PIPELINES = {
     # 'jd.pipelines.ImagesDownloadPipeline': 300,  # 下载图片管道
     # 格式为：'项目名.文件名.类名'：优先级（越小越大）
    # 'jd.pipelines.GoodsPipelines': 300,  # 提交单个商品入库
-   'jd.pipelines.GoodsListPipelines': 300,  # 批量提交商品入库
+   'jd.pipelines.GoodsList_id_name_img1_Pipelines': 300,  # 批量提交商品（id，名称，封面）入库
+   'jd.pipelines.GoodsList_price_Pipelines': 300,  # 批量提交商品（价格）入库
+   'jd.pipelines.GoodsList_comment_count_Pipelines': 300,  # 批量提交商品（评论数量）入库
+   'jd.pipelines.GoodsList_shop_id_Pipelines': 300,  # 批量提交商品（店铺归属）入库
    # 'jd.pipelines.jd_detail':300,
 }
 
